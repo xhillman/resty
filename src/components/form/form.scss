@@ -1,6 +1,7 @@
 $backgroundColor: #efefef;
 $radius: 40%;
 
+
 form {
   display: inline-block;
   margin: auto;
@@ -11,7 +12,7 @@ form {
     margin: 1rem 0;
     justify-content: space-between;
 
-    input {
+    input[type=text] {
       width: 60%;
       border: 1px solid black;
       border-radius: 5px;
@@ -19,10 +20,11 @@ form {
 
     button {
       background-color: lightgreen;
-      border: 1px solid black;
+      border: 1px solid green;
       border-radius: 5px;
 
     }
+
 
     &.methods {
       span {

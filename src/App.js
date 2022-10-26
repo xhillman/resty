@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import './App.scss';
+import './app.scss';
 
 // Let's talk about using index.js and some other name in the component folder
 // There's pros and cons for each way of doing this ...
@@ -9,40 +9,48 @@ import Footer from './components/footer';
 import Form from './components/form';
 import Results from './components/results';
 
-class App extends React.Component {
+function App() {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: null,
-      requestParams: {},
-    };
+  const [data, setData] = useState(null);
+  const [requestParams, setRequestParams] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const updateData = (data) => {
+    setData(data);
   }
 
-  callApi = (requestParams) => {
+  const updateParams = (params) => {
+    setRequestParams(params);
+  }
+
+  const callApi = (requestParams) => {
+    setLoading(true);
     // mock output
-    const data = {
-      count: 2,
-      results: [
-        {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-        {name: 'fake thing 2', url: 'http://fakethings.com/2'},
-      ],
-    };
-    this.setState({data, requestParams});
+    setTimeout(() => {
+      const newData = {
+        count: 2,
+        results: [
+          { name: 'fake thing 1', url: 'http://fakethings.com/1' },
+          { name: 'fake thing 2', url: 'http://fakethings.com/2' },
+        ],
+      };
+      updateData(newData);
+      updateParams(requestParams);
+      setLoading(false);
+    }, 2000);
   }
 
-  render() {
-    return (
-      <React.Fragment>
-        <Header />
-        <div>Request Method: {this.state.requestParams.method}</div>
-        <div>URL: {this.state.requestParams.url}</div>
-        <Form handleApiCall={this.callApi} />
-        <Results data={this.state.data} />
-        <Footer />
-      </React.Fragment>
-    );
-  }
+  return (
+    <React.Fragment>
+      <Header />
+      <div>Request Method: {requestParams.method}</div>
+      <div>URL: {requestParams.url}</div>
+      <Form handleApiCall={callApi} />
+      <div className={loading ? 'spinner' : null}></div>
+      <Results data={data} />
+      <Footer />
+    </React.Fragment>
+  );
 }
 
 export default App;

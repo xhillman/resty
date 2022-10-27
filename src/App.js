@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import './app.scss';
 
@@ -11,34 +12,37 @@ import Results from './components/results';
 
 function App() {
 
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
   const [requestParams, setRequestParams] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const updateData = (data) => {
-    setData(data);
-  }
-
-  const updateParams = (params) => {
-    setRequestParams(params);
-  }
-
-  const callApi = (requestParams) => {
+  const callApi = async (requestParams) => {
     setLoading(true);
-    // mock output
-    setTimeout(() => {
-      const newData = {
-        count: 2,
-        results: [
-          { name: 'fake thing 1', url: 'http://fakethings.com/1' },
-          { name: 'fake thing 2', url: 'http://fakethings.com/2' },
-        ],
-      };
-      updateData(newData);
-      updateParams(requestParams);
-      setLoading(false);
-    }, 2000);
+    let {method, url, body} = requestParams;
+    let request = {
+      method,
+      url,
+    }
+    if(body){
+      request.body = body;
+    }
+    setRequestParams(request);
   }
+
+  useEffect(() => {
+    // let method = requestParams.method;
+    // let url = requestParams.url;
+    const hitApi = async () => {
+      try {
+        let newData = await axios(requestParams);
+        setLoading(false);
+        setData(newData);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    hitApi();
+  }, [requestParams]);
 
   return (
     <React.Fragment>
@@ -46,8 +50,7 @@ function App() {
       <div>Request Method: {requestParams.method}</div>
       <div>URL: {requestParams.url}</div>
       <Form handleApiCall={callApi} />
-      <div className={loading ? 'spinner' : null}></div>
-      <Results data={data} />
+      <Results data={data} loading={loading}/>
       <Footer />
     </React.Fragment>
   );

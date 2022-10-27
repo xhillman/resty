@@ -1,9 +1,19 @@
 import './results.scss'
+import JSONPretty from 'react-json-pretty';
+let jsonPretty = require('react-json-pretty/dist/1337');
+let jsonPretty2 = require('react-json-pretty/dist/acai');
+
 
 const Results = (props) => {
   return (
     <section data-testid='output-area'>
-      <pre data-testid='results-pre'>{props.data ? JSON.stringify(props.data, undefined, 2) : null}</pre>
+      {props.loading ?
+        <div className={'spinner'}></div> :
+        <>
+          <JSONPretty data-testid='jsonPretty1' id='json-pretty' data={props.data.headers} theme={jsonPretty}></JSONPretty>
+          <JSONPretty data-testid='jsonPretty2' id='json-pretty2' data={props.data.data} theme={jsonPretty2}></JSONPretty>
+        </>
+      }
     </section>
     // <section>
     //   <pre>{props.data ? JSON.stringify(props.data.count, props.data.headers, props.data.body) : null}</pre>

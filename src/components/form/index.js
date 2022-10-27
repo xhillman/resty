@@ -13,7 +13,7 @@ const Form = (props) => {
   }
 
   const updateMethod = (e) => {
-    setMethod(e.target.id.toUpperCase());
+    setMethod(e.target.id);
     setIsActive(true);
   }
 
@@ -40,12 +40,12 @@ const Form = (props) => {
           <button data-testid='go-button' type="submit">GO!</button>
         </label>
         <label className="methods">
-          <span id="get" onClick={updateMethod} style={{backgroundColor: isActive && method === 'GET' ? 'lightgreen' : '#ccc',}}>GET</span>
-          <span id="post" onClick={updateMethod} style={{backgroundColor: isActive && method === 'POST' ? 'lightgreen' : '#ccc',}}>POST</span>
-          <span id="put" onClick={updateMethod} style={{backgroundColor: isActive && method === 'PUT' ? 'lightgreen' : '#ccc',}}>PUT</span>
-          <span id="delete" onClick={updateMethod} style={{backgroundColor: isActive && method === 'DELETE' ? 'lightgreen' : '#ccc',}}>DELETE</span>
+          <span id="get" onClick={updateMethod} style={{backgroundColor: isActive && method === 'get' ? 'lightgreen' : '#ccc',}}>GET</span>
+          <span id="post" onClick={updateMethod} style={{backgroundColor: isActive && method === 'post' ? 'lightgreen' : '#ccc',}}>POST</span>
+          <span id="put" onClick={updateMethod} style={{backgroundColor: isActive && method === 'put' ? 'lightgreen' : '#ccc',}}>PUT</span>
+          <span id="delete" onClick={updateMethod} style={{backgroundColor: isActive && method === 'delete' ? 'lightgreen' : '#ccc',}}>DELETE</span>
         </label>
-        {(method === 'PUT' || method === 'POST') && <textarea cols={31} rows={8} placeholder='Request JSON Here' onChange={updateRequest}></textarea>}
+        {(method === 'put' || method === 'post') && <textarea cols={31} rows={8} placeholder='Request JSON Here' onChange={updateRequest}></textarea>}
       </form>
     </>
   );

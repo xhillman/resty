@@ -15,9 +15,6 @@ const Results = (props) => {
         </>
       }
     </section>
-    // <section>
-    //   <pre>{props.data ? JSON.stringify(props.data.count, props.data.headers, props.data.body) : null}</pre>
-    // </section>
   );
 }
 
